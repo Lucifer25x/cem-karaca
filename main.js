@@ -7,7 +7,7 @@ const isImageURL = require('image-url-validator').default;
 const fs = require('fs');
 const ytdl = require('ytdl-core');
 
-bot.start((ctx) => ctx.reply('Welcome!'));
+bot.start((ctx) => ctx.reply('Cem Karaca botuna hoş geldiniz.\n\nBotun yaradılma amacı Cem Karaca şarkılarını tanıtmaktır.\nSource Code: https://github.com/Lucifer25x/cem-karaca'));
 
 bot.command('music', (ctx) => {
     let random = Math.floor(Math.random() * musics.length);
