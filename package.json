@@ -1,0 +1,27 @@
+{
+  "name": "cem-karaca",
+  "version": "1.0.0",
+  "description": "Telegram Bot",
+  "main": "main.js",
+  "scripts": {
+    "start": "nodemon ."
+  },
+  "keywords": [],
+  "author": "Lucifer25x",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "image-url-validator": "^1.0.4",
+    "nodemon": "^2.0.15",
+    "telegraf": "^4.5.2",
+    "ytdl-core": "^4.9.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lucifer25x/cem-karaca.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Lucifer25x/cem-karaca/issues"
+  },
+  "homepage": "https://github.com/Lucifer25x/cem-karaca#readme"
+}
