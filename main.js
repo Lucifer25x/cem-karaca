@@ -1,5 +1,5 @@
 const { Telegraf } = require('telegraf');
-const envconfig = require('dotenv').config();
+// const envconfig = require('dotenv').config();
 const bot = new Telegraf(process.env.TOKEN);
 const musics = require('./api/main.json');
 const albums = require('./api/albums.json');
