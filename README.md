@@ -3,6 +3,8 @@
 
 ![Cem Karaca](./cem.jpeg)
 
+Bot: https://t.me/cem_karaca_bot
+
 ## Botun kullanımı:
 * /start - Botu başlat
 * /help - Bot ve kullanımı hakkında
