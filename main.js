@@ -7,7 +7,19 @@ const isImageURL = require('image-url-validator').default;
 const fs = require('fs');
 const ytdl = require('ytdl-core');
 
-bot.start((ctx) => ctx.reply('Welcome!'));
+bot.start((ctx) => {
+    bot.telegram.sendMessage(
+        ctx.chat.id,
+        "Cem Karaca botuna hoşgeldiniz. Botun yaratılma amacı Cem Karaca şarkılarını tanıtmaktır. Bot'a istediğiniz gibi yenilik, düzenleme getirebilirsiniz. Bu açık kaynaklı bir projedir.\n\nBotun kullanımı için /help yazınız.",
+        {
+            reply_markup: {
+                inline_keyboard: [
+                    [{text: 'Source Code', url: 'https://github.com/Lucifer25x/cem-karaca'}]
+                ]
+            }
+        }
+    )
+});
 
 bot.command('music', (ctx) => {
     let random = Math.floor(Math.random() * musics.length);
@@ -17,13 +29,21 @@ bot.command('music', (ctx) => {
                 ctx.chat.id,
                 'https://i.ytimg.com/vi/' + musics[random].id + '/maxresdefault.jpg',
                 {
-                    caption: `Music name: ${musics[random].name}\nYoutube url: ${musics[random].youtube}\nSpotify url: ${musics[random].spotify}`
+                    caption: `Music name: ${musics[random].name}\n\nYoutube: ${musics[random].youtube}\nSpotify: ${musics[random].spotify}`,
                 }
             );
         } else {
             bot.telegram.sendMessage(
                 ctx.chat.id,
-                `Music name: ${musics[random].name}\nYoutube url: ${musics[random].youtube}\nSpotify url: ${musics[random].spotify}`
+                `Music name: ${musics[random].name}`,
+                {
+                    reply_markup: {
+                        inline_keyboard: [
+                            [{ text: 'Youtube', url: musics[random].youtube }],
+                            [{ text: 'Spotify', url: musics[random].spotify }]
+                        ]
+                    }
+                }
             );
         }
     })
@@ -33,12 +53,12 @@ bot.command('music', (ctx) => {
         let mp3_file = musics[random].name + ".mp3";
         ytdl(url, { quality: "highestaudio", filter: "audioonly" })
             .pipe(fs.createWriteStream(mp3_file).on('finish', () => {
-                bot.telegram.sendAudio(ctx.chat.id, {source: mp3_file}).then(() => {
+                bot.telegram.sendAudio(ctx.chat.id, { source: mp3_file }).then(() => {
                     fs.unlink(mp3_file, (err) => {
-                        if (err) throw err;    
+                        if (err) throw err;
                     });
                 })
-            }));    
+            }));
     }
 })
 
@@ -122,6 +142,66 @@ bot.command('contact', ctx => {
         ctx.chat.id,
         'Github: github.com/Lucifer25x\n\nTelegram: @lucifer25x'
     )
+})
+
+bot.command('search', ctx => {
+    let searchText = ctx.message.text.split(' ').slice(1).join(' ');
+    let searchResult = musics.filter(music => music.name.toLowerCase().includes(searchText.toLowerCase()));
+    let searchResultText = '';
+    for (let i = 0; i < searchResult.length; i++) {
+        searchResultText += `${i + 1}. ${searchResult[i].name}\n`;
+    }
+
+    let dividedSongList = [];
+    for (let i = 0; i < searchResult.length; i++) {
+        if (i % 3 == 0) {
+            dividedSongList.push([]);
+        }
+        let obj = {
+            text: searchResult[i].name,
+            callback_data: searchResult[i].name
+        }
+        dividedSongList[dividedSongList.length - 1].push(obj);
+        bot.action(searchResult[i].name, (ctx) => {
+            let youtube = searchResult[i].youtube;
+            let spotify = searchResult[i].spotify;
+            let mp3_file = searchResult[i].name + ".mp3";
+            if (ytdl.validateURL(youtube)) {
+                let url = 'http://www.youtube.com/watch?v=' + searchResult[i].id;
+                ytdl(url, { quality: "highestaudio", filter: "audioonly" })
+                    .pipe(fs.createWriteStream(mp3_file).on('finish', () => {
+                        bot.telegram.sendAudio(ctx.chat.id, { source: mp3_file }).then(() => {
+                            fs.unlink(mp3_file, (err) => {
+                                if (err) throw err;
+                            });
+                        })
+                    }));
+            }
+
+            bot.telegram.sendMessage(
+                ctx.chat.id,
+                `${searchResult[i].name}\n\nYoutube: ${youtube}\nSpotify: ${spotify}`
+            )
+        })
+    }
+
+    if(searchResultText.length == 0) {
+        searchResultText = 'Aranan şarkı bulunamadı.';
+        bot.telegram.sendMessage(
+            ctx.chat.id, 
+            searchResultText
+        )
+    } else {
+        bot.telegram.sendMessage(
+            ctx.chat.id,
+            'Arama sonuçları: ',
+            {
+                reply_markup: {
+                    inline_keyboard: dividedSongList
+                }
+            }
+        )
+    }
 })
 
 bot.launch();
