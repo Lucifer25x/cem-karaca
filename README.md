@@ -20,3 +20,9 @@ Bot: https://t.me/cem_karaca_bot
 *  Botu çalışır hale getirmek için terminalinizde `npm start` yazmalısınız.
 
 #### Eğer herhangi bir öneriniz ve s. varsa issues kısmından bildirebilirsiniz.
+
+### ScreenShots
+![Start](./start.png)
+![About](./about.png)
+![Albulms](./albums.png)
+![Search](./search.png)
