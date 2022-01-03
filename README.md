@@ -12,6 +12,7 @@ Bot: https://t.me/cem_karaca_bot
 * /about - Cem Karaca hakkında kısa bilgi
 * /albums - Cem Karaca Albümleri
 * /contact - İletişim
+* /search - Şarkı aramak için
 
 ### Kendi botunu yap:
 * .env dosyası yaratıp `env-example.txt` dosyasındakı tarzda kod yazın. Kodda botunuzun token'ini belirtmeniz gerekiyor.
