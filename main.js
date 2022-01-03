@@ -1,5 +1,5 @@
 const { Telegraf } = require('telegraf');
-const envconfig = require('dotenv').config();
+// const envconfig = require('dotenv').config();
 const bot = new Telegraf(process.env.TOKEN);
 const musics = require('./api/main.json');
 const albums = require('./api/albums.json');
@@ -7,6 +7,7 @@ const isImageURL = require('image-url-validator').default;
 const fs = require('fs');
 const ytdl = require('ytdl-core');
 
+<<<<<<< HEAD
 bot.start((ctx) => {
     bot.telegram.sendMessage(
         ctx.chat.id,
@@ -20,6 +21,9 @@ bot.start((ctx) => {
         }
     )
 });
+=======
+bot.start((ctx) => ctx.reply('Cem Karaca botuna hoş geldiniz.\n\nBotun yaradılma amacı Cem Karaca şarkılarını tanıtmaktır.\nSource Code: https://github.com/Lucifer25x/cem-karaca'));
+>>>>>>> 7ecb824da152e0e89feca35e8fc6dfd5db363d53
 
 bot.command('music', (ctx) => {
     let random = Math.floor(Math.random() * musics.length);
@@ -144,6 +148,7 @@ bot.command('contact', ctx => {
     )
 })
 
+<<<<<<< HEAD
 bot.command('search', ctx => {
     let searchText = ctx.message.text.split(' ').slice(1).join(' ');
     let searchResult = musics.filter(music => music.name.toLowerCase().includes(searchText.toLowerCase()));
@@ -205,3 +210,6 @@ bot.command('search', ctx => {
 })
 
 bot.launch();
+=======
+bot.launch();
+>>>>>>> 7ecb824da152e0e89feca35e8fc6dfd5db363d53
