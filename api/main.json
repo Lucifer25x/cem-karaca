@@ -222,7 +222,7 @@
         "spotify": "https://open.spotify.com/track/55OePLvaiGkKlYlqAGUCr3?si=c61e170c60d64700"
     },
     {
-        "name": "Eşeği saldım çayıra",
+        "name": "Eşeği saldım çayıra (Kazak Abdal)",
         "id": "elE1aP-vsSk",
         "youtube": "https://youtu.be/elE1aP-vsSk",
         "spotify": "https://open.spotify.com/track/41vwUZryPYjNSzoXiBaaQ7?si=ae6e0a767c394091"
@@ -850,5 +850,41 @@
         "id": "jXn164vM9aQ",
         "youtube": "https://youtu.be/jXn164vM9aQ",
         "spotify": "https://open.spotify.com/track/4hZ7OVegUlW9CNfHMzoh7U?si=0130b400165d4371"
+    },
+    {
+        "name": "Muhtar",
+        "id": "WJ1CPevscaE",
+        "youtube": "https://youtu.be/WJ1CPevscaE",
+        "spotify": "https://open.spotify.com/track/0H9mXxPHhNxr1bPPnHRSW8?si=9c849d01c5a74a4e"
+    },
+    {
+        "name": "Unut beni",
+        "id": "mAkc2Juw8hM",
+        "youtube": "https://youtu.be/mAkc2Juw8hM",
+        "spotify": "https://open.spotify.com/track/0PHfHk7nElZ2EX7phkuTwl?si=b86beeb865354115"
+    },
+    {
+        "name": "1 Mayıs",
+        "id": "BUtDthvr0hs",
+        "youtube": "https://youtu.be/BUtDthvr0hs",
+        "spotify": "https://open.spotify.com/track/4KQ8xXm9v7sF7ZeSWywiKs?si=e10b7bf14d264654"
+    },
+    {
+        "name": "Durduramayacaklar Halkın Coşkun Akan Selini",
+        "id": "7RNzJT1sD50",
+        "youtube": "https://youtu.be/7RNzJT1sD50",
+        "spotify": "https://open.spotify.com/track/0lEmYKC3VpV7chE1mNOUxP?si=8995672484d646b5"
+    },
+    {
+        "name": "Istanbul",
+        "id": "RIstUrsL2Dw",
+        "youtube": "https://youtu.be/RIstUrsL2Dw",
+        "spotify": "https://open.spotify.com/track/1psPfNnxn4EnKRt0fXlcja?si=0802ebc94ecb45db"
+    },
+    {
+        "name": "Why",
+        "id": "CivqSM1jjKo",
+        "youtube": "https://youtu.be/CivqSM1jjKo",
+        "spotify": "https://open.spotify.com/track/17kPQLv0ajKXh7xoH8yRm9?si=b337bf5092be4372"
     }
 ]
