@@ -117,7 +117,7 @@ bot.action(/[0-5]/, (ctx) => {
 bot.command('help', ctx => {
     bot.telegram.sendMessage(
         ctx.chat.id,
-        'Bot Cem Karaca şarkılarını tanıtmak için yapıldı.\n\nBotun kullanımı:\n/start - Botu başlat\n/help - Bot ve kullanımı hakkında\n/music - Random şarkı\n/about - Cem Karaca hakkında kısa bilgi\n/albums - Cem Karaca Albümleri\n/contact - İletişim'
+        'Bot Cem Karaca şarkılarını tanıtmak için yapıldı.\n\nBotun kullanımı:\n/start - Botu başlat\n/help - Bot ve kullanımı hakkında\n/music - Random şarkı\n/about - Cem Karaca hakkında kısa bilgi\n/albums - Cem Karaca Albümleri\n/search {şarkı adı} - Şarkı aratmak için\n/contact - İletişim'
     )
 })
 
