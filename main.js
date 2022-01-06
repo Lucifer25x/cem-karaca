@@ -1,11 +1,26 @@
 const { Telegraf } = require('telegraf');
-// const envconfig = require('dotenv').config();
+//const envconfig = require('dotenv').config();
 const bot = new Telegraf(process.env.TOKEN);
 const musics = require('./api/main.json');
 const albums = require('./api/albums.json');
 const isImageURL = require('image-url-validator').default;
 const fs = require('fs');
 const ytdl = require('ytdl-core');
+
+function download(url, id,  filename, ctx){
+    let mp3_file = filename + ".mp3";
+    if (ytdl.validateURL(url)) {
+        let url = 'http://www.youtube.com/watch?v=' + id;
+        ytdl(url, { quality: "highestaudio", filter: "audioonly" })
+            .pipe(fs.createWriteStream(mp3_file).on('finish', () => {
+                bot.telegram.sendAudio(ctx.chat.id, { source: mp3_file }).then(() => {
+                    fs.unlink(mp3_file, (err) => {
+                        if (err) throw err;
+                    });
+                })
+            }));
+    }
+}
 
 bot.start((ctx) => {
     bot.telegram.sendMessage(
@@ -14,7 +29,7 @@ bot.start((ctx) => {
         {
             reply_markup: {
                 inline_keyboard: [
-                    [{text: 'Source Code', url: 'https://github.com/Lucifer25x/cem-karaca'}]
+                    [{ text: 'Source Code', url: 'https://github.com/Lucifer25x/cem-karaca' }]
                 ]
             }
         }
@@ -48,18 +63,7 @@ bot.command('music', (ctx) => {
         }
     })
 
-    if (ytdl.validateURL(musics[random].youtube)) {
-        let url = 'http://www.youtube.com/watch?v=' + musics[random].id;
-        let mp3_file = musics[random].name + ".mp3";
-        ytdl(url, { quality: "highestaudio", filter: "audioonly" })
-            .pipe(fs.createWriteStream(mp3_file).on('finish', () => {
-                bot.telegram.sendAudio(ctx.chat.id, { source: mp3_file }).then(() => {
-                    fs.unlink(mp3_file, (err) => {
-                        if (err) throw err;
-                    });
-                })
-            }));
-    }
+    download(musics[random].youtube, musics[random].id, musics[random].name, ctx);
 })
 
 bot.command('albums', (ctx) => {
@@ -147,10 +151,6 @@ bot.command('contact', ctx => {
 bot.command('search', ctx => {
     let searchText = ctx.message.text.split(' ').slice(1).join(' ');
     let searchResult = musics.filter(music => music.name.toLowerCase().includes(searchText.toLowerCase()));
-    let searchResultText = '';
-    for (let i = 0; i < searchResult.length; i++) {
-        searchResultText += `${i + 1}. ${searchResult[i].name}\n`;
-    }
 
     let dividedSongList = [];
     for (let i = 0; i < searchResult.length; i++) {
@@ -165,18 +165,7 @@ bot.command('search', ctx => {
         bot.action(searchResult[i].name, (ctx) => {
             let youtube = searchResult[i].youtube;
             let spotify = searchResult[i].spotify;
-            let mp3_file = searchResult[i].name + ".mp3";
-            if (ytdl.validateURL(youtube)) {
-                let url = 'http://www.youtube.com/watch?v=' + searchResult[i].id;
-                ytdl(url, { quality: "highestaudio", filter: "audioonly" })
-                    .pipe(fs.createWriteStream(mp3_file).on('finish', () => {
-                        bot.telegram.sendAudio(ctx.chat.id, { source: mp3_file }).then(() => {
-                            fs.unlink(mp3_file, (err) => {
-                                if (err) throw err;
-                            });
-                        })
-                    }));
-            }
+            download(youtube, searchResult[i].id, searchResult[i].name, ctx)
 
             bot.telegram.sendMessage(
                 ctx.chat.id,
@@ -185,11 +174,20 @@ bot.command('search', ctx => {
         })
     }
 
-    if(searchResultText.length == 0) {
+    if (searchResult.length == 0) {
         searchResultText = 'Aranan şarkı bulunamadı.';
         bot.telegram.sendMessage(
-            ctx.chat.id, 
+            ctx.chat.id,
             searchResultText
+        )
+    } else if(searchResult.length == 1){
+        let youtube = searchResult[0].youtube;
+        let spotify = searchResult[0].spotify;
+        download(youtube, searchResult[0].id, searchResult[0].name, ctx)
+
+        bot.telegram.sendMessage(
+            ctx.chat.id,
+            `${searchResult[0].name}\n\nYoutube: ${youtube}\nSpotify: ${spotify}`
         )
     } else {
         bot.telegram.sendMessage(
