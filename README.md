@@ -1,4 +1,6 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/lucifer25x/cem-karaca/badge)](https://www.codefactor.io/repository/github/lucifer25x/cem-karaca)
+[![Known Vulnerabilities](https://snyk.io/test/github/Lucifer25x/cem-karaca/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Lucifer25x/cem-karaca?targetFile=package.json)
+
 # Cem Karaca Telegram botu
 | Bot Cem Karaca şarkılarını tanıtmak için yapıldı.
 
