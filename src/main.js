@@ -1,5 +1,5 @@
 const { Telegraf } = require('telegraf');
-const envconfig = require('dotenv').config();
+// const envconfig = require('dotenv').config();
 const bot = new Telegraf(process.env.TOKEN);
 const musics = require('../api/main.json');
 const albums = require('../api/albums.json');
@@ -49,6 +49,7 @@ bot.command('music', (ctx) => {
                         inline_keyboard: [
                             [{ text: 'Youtube', url: 'https://www.youtube.com/watch?v=' + musics[random].id }],
                             (musics[random].spotify != "null") ? [{ text: 'Spotify', url: musics[random].spotify }] : [],
+                            [{ text: 'Download', callback_data: 'download'}]
                         ]
                     }
                 },
@@ -62,6 +63,7 @@ bot.command('music', (ctx) => {
                         inline_keyboard: [
                             [{ text: 'Youtube', url: musics[random].youtube }],
                             (musics[random].spotify != "null") ? [{ text: 'Spotify', url: musics[random].spotify }] : [],
+                            [{ text: 'Download', callback_data: 'download' }]
                         ]
                     }
                 }
@@ -69,7 +71,10 @@ bot.command('music', (ctx) => {
         }
     })
 
-    download(musics[random].youtube, musics[random].id, musics[random].name, ctx);
+    bot.action('download', (ctx) => {
+        bot.telegram.sendMessage(ctx.chat.id, 'Downloading...');
+        download(musics[random].youtube, musics[random].id, musics[random].name, ctx);
+    })
 })
 
 bot.command('albums', (ctx) => {
