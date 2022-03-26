@@ -5,7 +5,7 @@
 # Cem Karaca Telegram botu
 | Bot Cem Karaca şarkılarını tanıtmak için yapıldı.
 
-![Cem Karaca](./cem.jpeg)
+![Cem Karaca](./images/cem.jpeg)
 
 Bot: https://t.me/cem_karaca_bot
 
@@ -36,7 +36,7 @@ Bot: https://t.me/cem_karaca_bot
 #### Eğer herhangi bir öneriniz ve s. varsa issues kısmından bildirebilirsiniz.
 
 ### ScreenShots
-![Start](./start.png)
-![About](./about.png)
-![Albulms](./albums.png)
-![Search](./search.png)
+![Start](./images/start.png)
+![About](./images/about.png)
+![Albulms](./images/albums.png)
+![Search](./images/search.png)

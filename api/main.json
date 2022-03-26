@@ -414,12 +414,6 @@
         "spotify": "https://open.spotify.com/track/4iN2XDFe6zUTXVqaZgT2I2?si=cd30879bdda244ee"
     },
     {
-        "name": "Oy gülüm oy",
-        "id": "O4G0I1Wf0dg",
-        "youtube": "https://youtu.be/O4G0I1Wf0dg",
-        "spotify": "https://open.spotify.com/track/3VBXcCRFpsFGOprrtZr7Lr?si=3db0e69573d344f3"
-    },
-    {
         "name": "Hasan Kalesi",
         "id": "Rdi7j14WxRk",
         "youtube": "https://youtu.be/Rdi7j14WxRk",
@@ -920,7 +914,7 @@
     {
         "name": "Kirpiklerin ok eyle",
         "id": "4mKqGaE_wG4",
-        "youtube": "https://youtu.be/4mKqGaE_wG4"
+        "youtube": "https://youtu.be/4mKqGaE_wG4",
         "spotify": "null"
     }
 ]
