@@ -2,7 +2,7 @@
   "name": "cem-karaca",
   "version": "1.0.0",
   "description": "Telegram Bot",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
     "start": "nodemon ."
   },
