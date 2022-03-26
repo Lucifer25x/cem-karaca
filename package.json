@@ -1,6 +1,6 @@
 {
   "name": "cem-karaca",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Telegram Bot",
   "main": "src/main.js",
   "scripts": {
