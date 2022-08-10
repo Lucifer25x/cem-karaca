@@ -1,5 +1,5 @@
 const { Telegraf } = require('telegraf');
-// const envconfig = require('dotenv').config();
+const envconfig = require('dotenv').config();
 const bot = new Telegraf(process.env.TOKEN);
 const musics = require('../api/main.json');
 const albums = require('../api/albums.json');
@@ -7,10 +7,13 @@ const isImageURL = require('image-url-validator').default;
 const fs = require('fs');
 const ytdl = require('ytdl-core');
 
-function download(url, id,  filename, ctx){
-    let mp3_file = filename + ".mp3";
+let random;
+
+//FIXME After downloading a song, it downloads the same song for each song
+function download({ id, name }, ctx) {
+    let mp3_file = name + ".mp3";
+    let url = 'http://www.youtube.com/watch?v=' + id;
     if (ytdl.validateURL(url)) {
-        let url = 'http://www.youtube.com/watch?v=' + id;
         ytdl(url, { quality: "highestaudio", filter: "audioonly" })
             .pipe(fs.createWriteStream(mp3_file).on('finish', () => {
                 bot.telegram.sendAudio(ctx.chat.id, { source: mp3_file }).then(() => {
@@ -30,6 +33,7 @@ bot.start((ctx) => {
             reply_markup: {
                 inline_keyboard: [
                     [{ text: 'Source Code', url: 'https://github.com/Lucifer25x/cem-karaca' }]
+                    [{ text: 'Source Code', url: 'https://github.com/Lucifer25x/cem-karaca' }]
                 ]
             }
         }
@@ -37,7 +41,7 @@ bot.start((ctx) => {
 })
 
 bot.command('music', (ctx) => {
-    let random = Math.floor(Math.random() * musics.length);
+    random = Math.floor(Math.random() * musics.length);
     isImageURL('https://i.ytimg.com/vi/' + musics[random].id + '/maxresdefault.jpg').then(is_image => {
         if (is_image) {
             bot.telegram.sendPhoto(
@@ -49,7 +53,7 @@ bot.command('music', (ctx) => {
                         inline_keyboard: [
                             [{ text: 'Youtube', url: 'https://www.youtube.com/watch?v=' + musics[random].id }],
                             (musics[random].spotify != "null") ? [{ text: 'Spotify', url: musics[random].spotify }] : [],
-                            [{ text: 'Download', callback_data: 'download'}]
+                            [{ text: 'Download', callback_data: 'download' }]
                         ]
                     }
                 },
@@ -73,7 +77,7 @@ bot.command('music', (ctx) => {
 
     bot.action('download', (ctx) => {
         bot.telegram.sendMessage(ctx.chat.id, 'Downloading...');
-        download(musics[random].youtube, musics[random].id, musics[random].name, ctx);
+        download(musics[random], ctx);
     })
 })
 
@@ -163,70 +167,67 @@ bot.command('search', ctx => {
     let searchText = ctx.message.text.split(' ').slice(1).join(' ');
     let searchResult = musics.filter(music => music.name.toLowerCase().includes(searchText.toLowerCase()));
 
-    let dividedSongList = [];
-    for (let i = 0; i < searchResult.length; i++) {
-        if (i % 3 == 0) {
-            dividedSongList.push([]);
-        }
-        let obj = {
-            text: searchResult[i].name,
-            callback_data: searchResult[i].name
-        }
-        dividedSongList[dividedSongList.length - 1].push(obj);
-        bot.action(searchResult[i].name, (ctx) => {
-            let youtube = searchResult[i].youtube;
-            let spotify = searchResult[0].spotify;
-
-            bot.telegram.sendMessage(
-                ctx.chat.id,
-                `${searchResult[i].name}`,
-                {
-                    reply_markup: {
-                        inline_keyboard: [
-                            [{ text: 'Youtube', url: youtube }],
-                            (spotify != "null") ? [{ text: 'Spotify', url: spotify }] : [],
-                            [{ text: 'Download', callback_data: 'download' }]
-                        ]
-                    }
-                }
-            )
-
-            bot.action('download', (ctx) => {
-                bot.telegram.sendMessage(ctx.chat.id, 'Downloading...');
-                download(youtube, searchResult[i].id, searchResult[i].name, ctx);
-            })
-        })
-    }
-
     if (searchResult.length == 0) {
-        searchResultText = 'Aranan şarkı bulunamadı.';
+        console.log('not result')
         bot.telegram.sendMessage(
             ctx.chat.id,
-            searchResultText
+            'Aranan şarkı bulunamadı.'
         )
-    } else if(searchResult.length == 1){
-        let youtube = searchResult[0].youtube;
-        let spotify = searchResult[0].spotify;
-
+    } else if (searchResult.length == 1) {
         bot.telegram.sendMessage(
             ctx.chat.id,
             `${searchResult[0].name}`,
             {
                 reply_markup: {
                     inline_keyboard: [
-                        [{ text: 'Youtube', url: youtube }],
-                        (spotify != "null") ? [{ text: 'Spotify', url: spotify }] : [],
-                        [{ text: 'Download', callback_data: 'download' }]
+                        [{ text: 'Youtube', url: searchResult[0].youtube }],
+                        (searchResult[0].spotify != "null") ? [{ text: 'Spotify', url: searchResult[0].spotify }] : [],
+                        [{ text: 'Download', callback_data: searchResult[0].name }]
                     ]
                 }
             }
         )
 
-        bot.action('download', (ctx) => {
+        bot.action(searchResult[0].name, (ctx) => {
             bot.telegram.sendMessage(ctx.chat.id, 'Downloading...');
-            download(youtube, searchResult[i].id, searchResult[i].name, ctx);
+            download(searchResult[0], ctx);
         })
     } else {
+        let dividedSongList = [];
+
+        for (let i = 0; i < searchResult.length; i++) {
+            if (i % 3 == 0) {
+                dividedSongList.push([]);
+            }
+            let obj = {
+                text: searchResult[i].name,
+                callback_data: searchResult[i].name
+            }
+            dividedSongList[dividedSongList.length - 1].push(obj);
+
+            bot.action(searchResult[i].name, (ctx) => {
+                bot.telegram.sendMessage(
+                    ctx.chat.id,
+                    `${searchResult[i].name}`,
+                    {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{ text: 'Youtube', url: searchResult[i].youtube }],
+                                (searchResult[0].spotify != "null") ? [{ text: 'Spotify', url: searchResult[i].spotify }] : [],
+                                [{ text: 'Download', callback_data: 'download'}]
+                            ]
+                        }
+                    }
+                )
+
+                bot.action('download', (ctx) => {
+                    bot.telegram.sendMessage(ctx.chat.id, 'Downloading...');
+                    download(searchResult[i], ctx);
+                })
+            })
+        }
+
+        //FIXME Bot crashes when we click on other songs
         bot.telegram.sendMessage(
             ctx.chat.id,
             'Arama sonuçları: ',
