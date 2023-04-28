@@ -25,14 +25,14 @@ Bot: https://t.me/cem_karaca_bot
 * Get thumbnail photo (if thumbnail photo is available)
 * Get Cem Karaca Albums
 
-### Şu anlık api'de sadece 153 Cem Karaca müziği bulunuyor. Kendi bildiğim şarkılarını eklemeye çalıştım. Ama bilmediğim şarkıları da olabilir. Eğer bir yenilik eklemek veya düzenleme  yapmak istiyorsanız lütfen PR atınız. 
+### Şu anlık api'de sadece 155 Cem Karaca müziği bulunuyor. Kendi bildiğim şarkılarını eklemeye çalıştım. Ama bilmediğim şarkıları da olabilir. Eğer bir yenilik eklemek veya düzenleme yapmak istiyorsanız lütfen PR atınız. 
 
 ### Kendi botunu yap:
 * .env dosyası yaratıp `env-example.txt` dosyasındakı tarzda kod yazın. Kodda botunuzun token'ini belirtmeniz gerekiyor.
 *  `npm install` komutunu terminalinizde yazarak gerekli bazı kütüphaneleri indirebilirsiniz.
 *  Botu çalışır hale getirmek için terminalinizde `npm start` yazmalısınız.
 
-#### Eğer herhangi bir öneriniz ve s. varsa issues kısmından bildirebilirsiniz.
+#### Eğer herhangi bir öneriniz ve s. varsa issues kısmından belirtebilirsiniz.
 
 ### ScreenShots
 ![Start](./images/start.png)
